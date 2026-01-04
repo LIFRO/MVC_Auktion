@@ -20,14 +20,35 @@ public class AuctionsController : Controller
         return View(auctions);
     }
 
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(AuctionModel auction)
     {
+        auction.InventoryId = auction.InventoryId.ToUpperInvariant();
+
+        if (auction.StartingPrice < auction.PurchaseCost)
+        {
+            ModelState.AddModelError(nameof(auction.StartingPrice), "Starting price cannot be below purchase cost.");
+        }
+
         if (!ModelState.IsValid)
         {
             return View(auction);
         }
 
-        auction.CreatedAt = DateTime.UtcNow;
+        var exists = await _db.Auctions.AnyAsync(a => a.InventoryId == auction.InventoryId);
+        if (exists)
+        {
+            ModelState.AddModelError(nameof(auction.InventoryId), "This InventoryId already exists.");
+            return View(auction);
+        }
+
+        auction.CreationDate = DateTime.UtcNow;
         _db.Auctions.Add(auction);
         await _db.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
