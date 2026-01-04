@@ -1,0 +1,26 @@
+@model IEnumerable<MVC_Auktioner.Models.AuctionModel>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>Auktioner</h1>
+@if (!Model.Any())
+{
+    <p>No auctions yet</p>
+}
+else
+{
+    <ul>
+        @foreach (var auction in Model)
+        {
+            <li>Auction @auction.Id</li>
+        }
+    </ul>
+}
+</body>
+</html>

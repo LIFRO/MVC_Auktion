@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MVC_Auktioner.Data;
+using MVC_Auktioner.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseInMemoryDatabase("AppDb"));
+builder.Services.AddDbContext<IdentityDataContext>(options =>
+    options.UseInMemoryDatabase("IdentityDb"));
 
 builder.Services
     .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<IdentityDataContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

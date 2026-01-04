@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MVC_Auktioner.Controllers;
 
-public class RegistrationController : Controller
+public class CreateAuctionController : Controller
 {
     public IActionResult Index()
     {
