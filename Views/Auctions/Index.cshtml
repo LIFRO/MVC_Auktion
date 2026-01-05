@@ -1,0 +1,47 @@
+@model IEnumerable<MVC_Auktioner.Models.AuctionModel>
+@{
+    ViewData["Title"] = "Auktioner";
+}
+
+<h1>Auktioner</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create auction</a>
+</p>
+
+@if (!Model.Any())
+{
+    <p>No auctions yet</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>InventoryId</th>
+            <th>Title</th>
+            <th>Decade</th>
+            <th>Category</th>
+            <th>PurchaseCost</th>
+            <th>StartingPrice</th>
+            <th>Sold</th>
+            <th>FinalPrice</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var auction in Model)
+        {
+            <tr>
+                <td>@auction.InventoryId</td>
+                <td>@auction.Title</td>
+                <td>@auction.Decade</td>
+                <td>@auction.Category</td>
+                <td>@auction.PurchaseCost</td>
+                <td>@auction.StartingPrice</td>
+                <td>@auction.Sold</td>
+                <td>@auction.FinalPrice</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

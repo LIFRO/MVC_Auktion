@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MVC_Auktioner.Models;
 
 namespace MVC_Auktioner.Areas.Identity.Data;
 
@@ -11,7 +12,7 @@ public class ApplicationDbContextt : IdentityDbContext<IdentityUser>
     {
     }
 
-    public DbSet<auction> Auctions {get; set; } = default;
+    public DbSet<AuctionModel> Auctions { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
