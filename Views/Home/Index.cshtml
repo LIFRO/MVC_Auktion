@@ -34,9 +34,10 @@
     <p>För att använda denna sidan korrekt kan du gå in i inventarie för att se alla dina inventarie.
         Efter det har du möjlighet att skapa inventarier.
         Du måste logga in för att kunna se inventarie.</p>
-    @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("IsAResponsible")){
+        @{//if (User.Identity != null && User.Identity.IsAuthenticated){
     <div class="spacer">
         <a class="btn btn-primary" asp-controller="Auctions" asp-action="Index" >Inventarie</a>
     </div>
+    //}
     }
 </div>
