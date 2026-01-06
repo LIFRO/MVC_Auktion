@@ -39,9 +39,24 @@ else
                 <td>@auction.Category</td>
                 <td>@auction.PurchaseCost</td>
                 <td>@auction.StartingPrice</td>
-                <td>@auction.Sold</td>
+                @{if (auction.Sold == true)
+                {
+                    <td>Sold</td>
+                }
+                else {
+                    <td>Not sold</td>
+                }
+                }
                 <td>@auction.FinalPrice</td>
-                <td><a asp-controller="Sold" asp-variable="@auction.InventoryId" class="btn btn-primare">Is sold</a></td>
+                @{if (auction.Sold == false)
+                {
+                <td><a asp-controller="Sold" asp-variable="@auction.InventoryId" class="btn btn-primary">Not Sold</a></td>
+                }
+                else 
+                {
+                    <td>Sold</td>
+                }
+                }
             </tr>
         }
         </tbody>
