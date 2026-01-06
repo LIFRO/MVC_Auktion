@@ -89,6 +89,7 @@ namespace MVC_Auktioner.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
+            public bool IsAResponsible { get; set;}
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -120,6 +121,15 @@ namespace MVC_Auktioner.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+
+                    if (Input.IsAResponsible)
+                    {
+                        await _userManager.AddToRoleAsync(user, "IsAResponsible");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "user");
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

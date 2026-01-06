@@ -21,6 +21,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="identity" asp-page="/Account/Logout">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -28,8 +31,12 @@
     </header>
     <h1 class="display-4">Välkomen till GG's auktion</h1>
     <p>Här kan man lägga upp auktioner och lägga bud på auktionerade saker</p>
-    <p>För att använda denna sidan korrekt kan du gå in i inventarie för att se alla dina inventarie. Efter det har du möjlighet att skapa inventarier</p>
+    <p>För att använda denna sidan korrekt kan du gå in i inventarie för att se alla dina inventarie.
+        Efter det har du möjlighet att skapa inventarier.
+        Du måste logga in för att kunna se inventarie.</p>
+    @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("IsAResponsible")){
     <div class="spacer">
         <a class="btn btn-primary" asp-controller="Auctions" asp-action="Index" >Inventarie</a>
     </div>
+    }
 </div>
