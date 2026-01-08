@@ -23,16 +23,16 @@ public class AuctionModel
     [StringLength(200)]
     public string? Description { get; set; }
 
-    [Required, Range(0, double.MaxValue)]
-    public decimal StartingPrice { get; set; }
+    [Required, Range(0, float.MaxValue)]
+    public float StartingPrice { get; set; }
     
-    [Required, Range(0, double.MaxValue)]
-    public decimal PurchaseCost { get; set; }
+    [Required, Range(0, float.MaxValue)]
+    public float PurchaseCost { get; set; }
 
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
-    [Range(0, double.MaxValue)]
-    public decimal? FinalPrice { get; set; }
+    [Range(0, float.MaxValue)]
+    public float? FinalPrice { get; set; }
 
     [Required]
     public bool Sold { get; set; } = false;

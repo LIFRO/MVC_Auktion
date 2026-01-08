@@ -32,8 +32,8 @@
     <h1 class="display-4">Välkomen till GG's auktion</h1>
     <p>Här kan man lägga upp auktioner och lägga bud på auktionerade saker</p>
     <p>För att använda denna sidan korrekt kan du gå in i inventarie för att se alla dina inventarie.
-        Efter det har du möjlighet att skapa inventarier.
-        Du måste logga in för att kunna se inventarie.</p>
+        Efter det har du möjlighet att skapa inventarier.</p>
+        <p>Du måste logga in för att kunna se inventarie. dessutom använd inte decimal eller punkt för siffror</p>
         @{//if (User.Identity != null && User.Identity.IsAuthenticated){
     <div class="spacer">
         <a class="btn btn-primary" asp-controller="Auctions" asp-action="Index" >Inventarie</a>
