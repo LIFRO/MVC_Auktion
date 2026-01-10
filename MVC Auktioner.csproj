@@ -22,4 +22,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.11" />
   </ItemGroup>
 
+  <!-- Exclude test project files from the web app build -->
+  <ItemGroup>
+    <Compile Remove="MVC_Auktioner.Tests\**" />
+    <EmbeddedResource Remove="MVC_Auktioner.Tests\**" />
+    <None Remove="MVC_Auktioner.Tests\**" />
+  </ItemGroup>
+
 </Project>
