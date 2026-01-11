@@ -1,0 +1,70 @@
+@model MVC_Auktioner.Models.EditAuctionModel
+@{
+    ViewData["Title"] = "Edit Auction";
+}
+
+<h1>Edit Auction</h1>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="InventoryId"></label>
+        <input asp-for="InventoryId" class="form-control" />
+        <span asp-validation-for="InventoryId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Location"></label>
+        <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Decade"></label>
+        <input asp-for="Decade" class="form-control" />
+        <span asp-validation-for="Decade" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CategoryId"></label>
+        <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryList">
+            <option value="">-- Select Category --</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PurchaseCost"></label>
+        <input asp-for="PurchaseCost" class="form-control" />
+        <span asp-validation-for="PurchaseCost" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StartingPrice"></label>
+        <input asp-for="StartingPrice" class="form-control" />
+        <span asp-validation-for="StartingPrice" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Back to list</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

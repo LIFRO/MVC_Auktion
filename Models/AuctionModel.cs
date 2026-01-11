@@ -4,13 +4,7 @@ namespace MVC_Auktioner.Models;
 
 public class AuctionModel
 {
-<<<<<<< HEAD
-    public int Id { get; set; }
-    public string Name { get; set; } = "";
-    public string Type { get; set; } = "";
-    public string Image { get; set;} = "";
-    public int Year { get; set; } = ""; 
-=======
+
     [Required]
     public int Id { get; set; } 
 
@@ -20,9 +14,10 @@ public class AuctionModel
     [Required]
     public int Decade { get; set; }
 
-    [Required, StringLength(50)]
-    public string Category { get; set; } = string.Empty;
+    [Required, Range(1, int.MaxValue, ErrorMessage = "Select a category.")]
+    public int CategoryId { get; set; }
 
+    public CategoryModel? Category { get; set; }
 
     [Required, StringLength(40)]
     public string Title { get; set; } = string.Empty;
@@ -30,18 +25,25 @@ public class AuctionModel
     [StringLength(200)]
     public string? Description { get; set; }
 
-    [Required, Range(0, double.MaxValue)]
-    public decimal StartingPrice { get; set; }
+    [Required, StringLength(50)]
+    public string Location { get; set; } = string.Empty;
+
+    [Required, StringLength(100)]
+    public string Seller { get; set; } = string.Empty;
+
+    [Required, Range(0, float.MaxValue)]
+    public float StartingPrice { get; set; }
     
-    [Required, Range(0, double.MaxValue)]
-    public decimal PurchaseCost { get; set; }
+    [Required, Range(0, float.MaxValue)]
+    public float PurchaseCost { get; set; }
 
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
-    [Range(0, double.MaxValue)]
-    public decimal? FinalPrice { get; set; }
+    [Range(0, float.MaxValue)]
+    public float? FinalPrice { get; set; }
 
     [Required]
     public bool Sold { get; set; } = false;
->>>>>>> 20622d39618142feaa61d2ccb028ade0878801ce
+    [Required]
+    public bool Delivered { get; set; } = false;
 }
