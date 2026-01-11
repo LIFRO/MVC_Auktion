@@ -30,4 +30,7 @@ public class SoldEditAuctionModel
 
     [Required]
     public bool Sold { get; set; }
+
+    [Required]
+    public bool Delivered { get; set; }
 }

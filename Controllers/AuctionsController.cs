@@ -146,7 +146,8 @@ public class AuctionsController : Controller
             Description = auction.Description,
             Location = auction.Location,
             StartingPrice = auction.StartingPrice,
-            PurchaseCost = auction.PurchaseCost
+            PurchaseCost = auction.PurchaseCost,
+            Delivered = auction.Delivered
         };
         await PopulateCategoriesAsync(model.CategoryId);
         return View(model);
@@ -196,6 +197,7 @@ public class AuctionsController : Controller
         auction.Seller = auction.Seller;
         auction.StartingPrice = model.StartingPrice;
         auction.PurchaseCost = model.PurchaseCost;
+        auction.Delivered = model.Delivered;
 
         await _db.SaveChangesAsync();
 
@@ -279,10 +281,18 @@ public class AuctionsController : Controller
         {
             auction.FinalPrice = model.FinalPrice;
             auction.Sold = true;
+            auction.Delivered = true;
+        }
+        else if (model.Delivered)
+        {
+            auction.FinalPrice = model.FinalPrice;
+            auction.Sold = true;
+            auction.Delivered = true;
         }
         else
         {
             auction.FinalPrice = null;
+            auction.Sold = false;
             auction.Sold = false;
         }
 
@@ -290,6 +300,7 @@ public class AuctionsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
     private async Task PopulateCategoriesAsync(int? selectedCategoryId = null)
     {
         var categories = await _db.Category

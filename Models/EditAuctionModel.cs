@@ -33,4 +33,10 @@ public class EditAuctionModel
     
     [Required, Range(0, float.MaxValue)]
     public float PurchaseCost { get; set; }
+
+    [Required]
+    public bool Delivered { get; set; }
+
+    [Required]
+    public bool Placeholder { get; set; }
 }

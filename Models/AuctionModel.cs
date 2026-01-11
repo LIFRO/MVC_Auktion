@@ -43,4 +43,7 @@ public class AuctionModel
 
     [Required]
     public bool Sold { get; set; } = false;
+
+    [Required]
+    public bool Delivered { get; set; } = false;
 }
