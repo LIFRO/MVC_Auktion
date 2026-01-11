@@ -80,7 +80,7 @@ public class AuctionsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpGet]
+    [HttpGet, Authorize(Roles = "IsAResponsible")]
     public async Task<IActionResult> Sell(int id)
     {
         var auction = await _db.Auctions.FirstOrDefaultAsync(a => a.Id == id);
