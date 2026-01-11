@@ -20,10 +20,22 @@ public class AuctionsController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var auctions = await _db.Auctions
+        var currentUser = User?.Identity?.Name ?? User?.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        var isResponsible = User?.IsInRole("IsAResponsible") ?? false;
+
+        var query = _db.Auctions
             .Include(a => a.Category)
-            .AsNoTracking()
-            .ToListAsync();
+            .AsNoTracking();
+
+
+        if(!isResponsible)
+        {
+            query = query.Where(a => a.Seller == currentUser);
+        }
+
+        var auctions = await query.ToListAsync();
+
         return View(auctions);
     }
 
@@ -204,6 +216,7 @@ public class AuctionsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "IsAResponsible")]
     public async Task<IActionResult> SoldEdit(int id)
     {
         var auction = await _db.Auctions.FirstOrDefaultAsync(a => a.Id == id);
@@ -236,6 +249,7 @@ public class AuctionsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "IsAResponsible")]
     public async Task<IActionResult> SoldEdit(SoldEditAuctionModel model)
     {
         var auction = await _db.Auctions.FirstOrDefaultAsync(a => a.Id == model.Id);

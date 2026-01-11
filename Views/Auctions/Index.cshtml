@@ -52,31 +52,38 @@ else
                 <td>@auction.Seller</td>
                 <td>@auction.PurchaseCost</td>
                 <td>@auction.StartingPrice</td>
-                @{if (auction.Delivered){
-                        <tb>Delivered</tb>
-                    }
-                    if(auction.Sold){
-                        <tb>Sold</tb>
-                    }
-                    <tb>Not sold</tb>
-                }
-                <td>@auction.FinalPrice</td>
-                @{if (auction.Sold == false)
-                {
-                    if (User.IsInRole("IsAResponsible"))
+                <td>
+                    @if (auction.Delivered)
                     {
-                        <td><a asp-action="Sell" asp-route-id="@auction.Id" class="btn btn-primary" >Not Sold</a></td>
+                        @:Delivered
+                    }
+                    else if (auction.Sold)
+                    {
+                        @:Sold
                     }
                     else
                     {
-                        <td>Not Responsible</td>
+                        @:Not sold
                     }
-                }
-                else 
-                {
-                    <td>Sold</td>
-                }
-                }
+                </td>
+                <td>@(auction.FinalPrice?.ToString() ?? "Not sold")</td>
+                <td>
+                    @if (auction.Sold == false)
+                    {
+                        if (User.IsInRole("IsAResponsible"))
+                        {
+                            <a asp-action="Sell" asp-route-id="@auction.Id" class="btn btn-primary">Not Sold</a>
+                        }
+                        else
+                        {
+                            @:Not Responsible
+                        }
+                    }
+                    else
+                    {
+                        @:Sold
+                    }
+                </td>
             </tr>
         }
         </tbody>

@@ -116,7 +116,7 @@ namespace MVC_Auktioner.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, "user");
+                        await _userManager.AddToRoleAsync(user, "User");
                     }
                     _logger.LogInformation("User created a new account with password.");
 

@@ -68,4 +68,79 @@ public class AuctionsControllerTests
         Assert.NotNull(authorize);
         Assert.Equal("IsAResponsible", authorize!.Roles);
     }
+
+    [Fact]
+    public async Task Create_WithStartingPriceBelowPurchaseCost_ReturnsViewWithError()
+    {
+        // Arrange
+        using var context = BuildContext(nameof(Create_WithStartingPriceBelowPurchaseCost_ReturnsViewWithError));
+        var category = new CategoryModel { CategoryName = "Decor" };
+        context.Category.Add(category);
+        await context.SaveChangesAsync();
+
+        var controller = new AuctionsController(context);
+        var auction = new AuctionModel
+        {
+            InventoryId = "AAA000000",
+            Decade = 1980,
+            CategoryId = category.Id,
+            Title = "Test",
+            Description = "Desc",
+            Location = "Loc",
+            Seller = "Seller",
+            PurchaseCost = 100,
+            StartingPrice = 50 // below cost
+        };
+
+        // Act
+        var result = await controller.Create(auction);
+
+        // Assert
+        var view = Assert.IsType<ViewResult>(result);
+        Assert.Same(auction, view.Model);
+        Assert.True(controller.ModelState.ContainsKey(nameof(auction.StartingPrice)));
+        Assert.Empty(context.Auctions);
+    }
+
+    [Fact]
+    public async Task Sell_WithFinalPriceBelowStartingPrice_ReturnsViewWithError()
+    {
+        // Arrange
+        using var context = BuildContext(nameof(Sell_WithFinalPriceBelowStartingPrice_ReturnsViewWithError));
+        var category = new CategoryModel { CategoryName = "Household" };
+        context.Category.Add(category);
+        await context.SaveChangesAsync();
+        var auction = new AuctionModel
+        {
+            InventoryId = "BBB111111",
+            Decade = 1970,
+            CategoryId = category.Id,
+            Title = "Test",
+            Location = "Loc",
+            Seller = "Seller",
+            PurchaseCost = 10,
+            StartingPrice = 200
+        };
+        context.Auctions.Add(auction);
+        await context.SaveChangesAsync();
+
+        var controller = new AuctionsController(context);
+        var model = new SellAuctionModel
+        {
+            Id = auction.Id,
+            InventoryId = auction.InventoryId,
+            StartingPrice = auction.StartingPrice,
+            FinalPrice = 50 // below starting price
+        };
+
+        // Act
+        var result = await controller.Sell(model);
+
+        // Assert
+        var view = Assert.IsType<ViewResult>(result);
+        Assert.True(controller.ModelState.ContainsKey(nameof(model.FinalPrice)));
+        var stored = await context.Auctions.AsNoTracking().FirstAsync();
+        Assert.False(stored.Sold);
+        Assert.Null(stored.FinalPrice);
+    }
 }
