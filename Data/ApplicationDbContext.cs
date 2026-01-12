@@ -13,10 +13,11 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     }
 
     public DbSet<AuctionModel> Auctions { get; set; } = default!;
+    public DbSet<CategoryModel> Category { get; set; } = default!;
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
     }
 }
-

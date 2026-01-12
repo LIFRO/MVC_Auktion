@@ -1,0 +1,91 @@
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model IEnumerable<MVC_Auktioner.Models.AuctionModel>
+@{
+    ViewData["Title"] = "Auktioner";
+}
+
+<h1>Auktioner</h1>
+
+<p>
+    <a asp-controller="Home" asp-action="index" class="btn btn-primary">Back</a>
+    @{if (User.Identity?.IsAuthenticated == true)//
+    {
+        <a asp-action="Create" class="btn btn-primary">Create auction</a>
+    }
+    }
+    <a asp-controller="Category" asp-action="Index" class="btn btn-primary">Create category</a>
+</p>
+
+@if (!Model.Any())
+{
+    <p>No auctions yet</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Edit</th>
+            <th>InventoryId</th>
+            <th>Title</th>
+            <th>Decade</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Seller</th>
+            <th>PurchaseCost</th>
+            <th>StartingPrice</th>
+            <th>Status</th>
+            <th>FinalPrice</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var auction in Model)
+        {
+            <tr>
+                <td><a asp-action="Edit" asp-route-id="@auction.Id" class="btn btn-primary">Edit</a></td>
+                <td>@auction.InventoryId</td>
+                <td>@auction.Title</td>
+                <td>@auction.Decade</td>
+                <td>@auction.Category?.CategoryName</td>
+                <td>@auction.Location</td>
+                <td>@auction.Seller</td>
+                <td>@auction.PurchaseCost</td>
+                <td>@auction.StartingPrice</td>
+                <td>
+                    @if (auction.Delivered)
+                    {
+                        @:Delivered
+                    }
+                    else if (auction.Sold)
+                    {
+                        @:Sold
+                    }
+                    else
+                    {
+                        @:Not sold
+                    }
+                </td>
+                <td>@(auction.FinalPrice?.ToString() ?? "Not sold")</td>
+                <td>
+                    @if (auction.Sold == false)
+                    {
+                        if (User.IsInRole("IsAResponsible"))
+                        {
+                            <a asp-action="Sell" asp-route-id="@auction.Id" class="btn btn-primary">Not Sold</a>
+                        }
+                        else
+                        {
+                            @:Not Responsible
+                        }
+                    }
+                    else
+                    {
+                        @:Sold
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

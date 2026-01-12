@@ -1,9 +1,9 @@
-﻿@{
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-        <header>
+    <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -13,19 +13,30 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auktioner" asp-action="Index">Auktioner</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register" >Create Account</a>
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Create Account</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="identity" asp-page="/Account/Logout">Logout</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <h1 class="display-4">Välkomen till GG's auktion</h1>
-    <p>Här kan man lägga upp auktioner och lägga bud på auktionerade saker</p>
+
+    <h1 class="display-4">Välkommen till GG:s auktion</h1>
+    <p>Så här använder du sidan:</p>
+    <p>1) Registrera dig eller logga in. 2) Inventarie visar dina objekt (auktionsansvarig ser alla). 3) Skapa objekt från Inventarie när du är inloggad.</p>
+    <p>Regler: ID-format ska vara AAA000000 (3 bokstäver + 6 siffror). Utgångspris måste vara minst inköpskostnaden. Slutpris och såld-status sätts av auktionsansvarig. För tillfället använd inte decimaler.</p>
+
+    <div class="spacer">
+        <a class="btn btn-primary" asp-controller="Auctions" asp-action="Index">Inventarie</a>
+    </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
